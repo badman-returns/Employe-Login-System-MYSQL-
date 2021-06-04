@@ -67,7 +67,7 @@ class App {
 
   private routes() {
     this.app.get('/', (req: Request, res: Response, next: NextFunction) => {
-      res.send('Brix Yoga');
+      res.send('Employe Login System');
     });
     this.app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
     this.app.use('/api/v1', this.apiV1Routes);
