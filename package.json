@@ -2,7 +2,7 @@
   "name": "employe-login-system-backend",
   "version": "1.0.0",
   "description": "Antartical Global Coding Round Project",
-  "main": "src/server.ts",
+  "main": "server.ts",
   "scripts": {
     "build": "tsc",
     "buildWatch": "tsc -w",
