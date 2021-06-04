@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/aa174cc3-98eb-4c0e-8c20-70e61a184882/resourceGroups/antarticaGlobal/providers/Microsoft.Web/sites/antarticalglobaltsgoswami",
+    "appService.deploySubpath": "."
+}
