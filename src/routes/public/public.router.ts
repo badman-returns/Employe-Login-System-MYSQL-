@@ -15,7 +15,7 @@ class PublicRouting {
     private configRoutes() {
         // Employee Routes
         this.router.post('/register', [this.upload.none(), ...ValidateEmployeeRegistrationData], RegisterEmployee);
-        this.router.get('/login', [...ValidateBasicAuth, ...LoadAuthorization], LoginByUserIdAndPassword)
+        this.router.get('/login', [...ValidateBasicAuth, ...LoadAuthorization], LoginByUserIdAndPassword);
     }
 }
 

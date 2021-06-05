@@ -5,7 +5,8 @@ import cors from 'cors';
 import logger from 'morgan';
 import express, { NextFunction, Response, Request } from 'express';
 import MasterTables from './database/createTablesAndInsertMasterData';
-import { PublicRouter } from './routes/public/public.router';
+import { PublicRouter } from './routes';
+import { AdminRouter } from './routes';
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -38,7 +39,7 @@ class App {
     this.app.use(bodyParser.raw());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(cookieParser());
-    this.app.use(logger('[:dategi[web]] :method :url :status :res[content-length] - :remote-addr - :response-time ms'));
+    this.app.use(logger('[:date[web]] :method :url :status :res[content-length] - :remote-addr - :response-time ms'));
   }
 
   private initializeErrorHandling() {
@@ -72,11 +73,12 @@ class App {
 
   private routes() {
     this.app.get('/', (req: Request, res: Response, next: NextFunction) => {
-      res.send('Employe Login System for Coding Test');
+      res.send('Employe Login System');
     });
     this.app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
     this.app.use('/api/v1', this.apiV1Routes);
     this.apiV1Routes.use('/', PublicRouter);
+    this.apiV1Routes.use('/admin', AdminRouter);
   }
 }
 
