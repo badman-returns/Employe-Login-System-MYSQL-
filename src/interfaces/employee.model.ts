@@ -1,12 +1,8 @@
-interface Employee{
-    id: string | number;
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-    employeeId: string,
+import { User } from "./user.model";
+
+interface Employee extends User {
+    employeeId: number,
     organization: string,
-    createdOn: Date,
 }
 
 export {
