@@ -5,6 +5,7 @@ import cors from 'cors';
 import logger from 'morgan';
 import express, { NextFunction, Response, Request } from 'express';
 import MasterTables from './database/createTablesAndInsertMasterData';
+import { PublicRouter } from './routes/public/public.router';
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -71,7 +72,7 @@ class App {
     });
     this.app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
     this.app.use('/api/v1', this.apiV1Routes);
-    
+    this.apiV1Routes.use('/', PublicRouter);
   }
 }
 

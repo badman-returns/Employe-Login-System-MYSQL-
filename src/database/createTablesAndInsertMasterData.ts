@@ -19,7 +19,7 @@ export default class CreateTablesAndInsertMasterData {
                 employeeId VARCHAR(255) NOT NULL,
                 organization VARCHAR(255) NOT NULL,
                 createdOn DATETIME NOT NULL DEFAULT current_timestamp,                
-                CONSTRAINT contacts_unique UNIQUE (id))
+                CONSTRAINT contacts_unique UNIQUE(employeeId))
             `, (err, res) => {
                 if (err) {
                     return reject(err);
