@@ -38,8 +38,7 @@ class App {
     this.app.use(bodyParser.raw());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(cookieParser());
-    this.app.use(express.static(path.join(__dirname, '../uploads')));
-    this.app.use(logger('[:date[web]] :method :url :status :res[content-length] - :remote-addr - :response-time ms'));
+    this.app.use(logger('[:dategi[web]] :method :url :status :res[content-length] - :remote-addr - :response-time ms'));
   }
 
   private initializeErrorHandling() {
@@ -59,8 +58,13 @@ class App {
 
   public async createDefaultTables() {
     try {
-        console.log(`Creating Employe Table`);
-        await MasterTables.createEmployeeTable()
+
+      console.log(`Creating Admin User Table and Super Admin User...`);
+      await MasterTables.createUserTableAndSuperAdmin();
+
+      console.log(`Creating Employe Table`);
+      await MasterTables.createEmployeeTable();
+
     } catch (error) {
       throw new Error(error);
     }

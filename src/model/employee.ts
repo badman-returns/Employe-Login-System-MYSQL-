@@ -38,7 +38,7 @@ export class EmployeeDB {
 
     public static insertEmployee(firstName: string, lastName: string, email: string, password: string, employeeId: Number, organization: string): Promise<string> {
         return new Promise((resolve, reject) => {
-            db.query(`INSERT INTO ${Tables.EMPLOYEE} (firstName, lastName, emailId, password, employeeId ,organization) VALUES ('${firstName}', '${lastName}', '${email}', '${password}', '${employeeId}','${organization}')`, (err, res) => {
+            db.query(`INSERT INTO ${Tables.EMPLOYEE} (firstName, lastName, email, password, employeeId ,organization) VALUES ('${firstName}', '${lastName}', '${email}', '${password}', '${employeeId}','${organization}')`, (err, res) => {
                 if (err) {
                     return reject(err);
                 }
