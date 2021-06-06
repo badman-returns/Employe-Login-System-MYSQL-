@@ -1,11 +1,11 @@
 import * as express from "express";
 import multer from 'multer';
-import { ValidateBasicAuth, LoadAuthorization } from "../../middleware";
+import { ValidateBasicAuth, LoadAuthorization, ValidateBearerToken, LoadAuthorizedUser } from "../../middleware";
 import { LoginByUserIdAndPassword } from "./admin.controller";
+import { AdminEmployeeSearch, AdminSortEmployeeByDetails } from "./controller/admin.employee.controller";
 
 class AdminRouting {
     public router: express.Router;
-    private upload = multer();
     constructor() {
         this.router = express.Router();
         this.configRoutes();
@@ -14,7 +14,13 @@ class AdminRouting {
     private configRoutes() {
 
         // Authentication Routes
-        this.router.get('/authentication', [...ValidateBasicAuth, ...LoadAuthorization], LoginByUserIdAndPassword);
+        this.router.get('/login', [...ValidateBasicAuth, ...LoadAuthorization], LoginByUserIdAndPassword);
+
+        // Employee Search Routes
+        this.router.get('/search', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], AdminEmployeeSearch);
+
+        // Employee Search Route by sorting
+        this.router.get('/employee', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], AdminSortEmployeeByDetails)
     }
 }
 

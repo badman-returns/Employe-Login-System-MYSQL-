@@ -26,6 +26,20 @@ class RegisterValidator {
                     in: ['body'],
                     isEmail: true,
                     exists: true,
+                    custom: {
+                        options: (email: string) => {
+                          return new Promise(async(resolve, reject) => {
+                              const employeeData = await EmployeeDB.getEmployeeByEmailId(email);
+                              if(employeeData != null){
+                                return reject(false);
+                              }
+                              else {
+                                  return resolve(true);
+                              }
+                          });
+                        },
+                        errorMessage: 'Email already exists.',
+                    },
                     errorMessage: 'Email is missing',
                 },
                 password: {
@@ -44,12 +58,12 @@ class RegisterValidator {
                     in: ['body'],
                     isInt: true,
                     exists: true,
+                    isDecimal: true,
                     custom: {
-                        options: (value: number, { req }) => {
-                            const organization = req.body.organization;
-                            if (Number.isInteger(+value))
+                        options: (employeeId: number) => {
+                            if(Number.isInteger(+employeeId))
                                 return new Promise(async (resolve, reject) => {
-                                    const employeeData = await EmployeeDB.getEmployeeByEmployeeIdAndOrg(value, organization);
+                                    const employeeData = await EmployeeDB.getEmployeeByEmployeeId(employeeId);
                                     if (employeeData != null) {
                                         return reject(false);
                                     }
