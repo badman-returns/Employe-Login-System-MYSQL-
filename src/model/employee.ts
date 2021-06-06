@@ -1,6 +1,7 @@
 import db from './db';
 import { Employee } from '../interfaces';
 import { Tables } from '../configs/table.config';
+import e from 'express';
 
 export class EmployeeDB {
 
@@ -8,27 +9,27 @@ export class EmployeeDB {
 
     }
 
-    public static getEmployeeByEmailId(email: string): Promise<Employee> {
+    public static getEmployeeBySorting(sortBy: string, limit?: Number, offset?: Number): Promise<Employee> {
         return new Promise((resolve, reject) => {
-            db.query(`SELECT * FROM ${Tables.EMPLOYEE} WHERE ${Tables.EMPLOYEE}.emailId='${email}'`, (err, res) => {
-                if (err){
-                    return reject(err);
-                }
-                if (res.length){
-                    return resolve(Object.assign({}, res[0]));
-                }
-                return resolve(null);
-            })
-        })
-    }
-
-    public static getEmployeeByEmployeeIdAndOrg(employeeId: number, organization: string): Promise<Employee> {
-        return new Promise((resolve, reject) => {
-            db.query(`SELECT * FROM ${Tables.EMPLOYEE} WHERE ${Tables.EMPLOYEE}.employeeId=${employeeId} AND ${Tables.EMPLOYEE}.organization='${organization}'`, (err, res) => {
+            let sortQuery = '';
+            let pagination = '';
+            if (limit >= 0 && offset >= 0) {
+                pagination = `LIMIT ${limit} OFFSET ${offset}`
+            }
+            if (sortBy) {
+                sortQuery = `ORDER BY ${Tables.EMPLOYEE}.${sortBy} ASC`
+            }
+            let query = `SELECT ${Tables.EMPLOYEE}.id, ${Tables.EMPLOYEE}.firstName, ${Tables.EMPLOYEE}.lastName, ${Tables.EMPLOYEE}.email, ${Tables.EMPLOYEE}.employeeId, ${Tables.EMPLOYEE}.organization, ${Tables.EMPLOYEE}.createdOn
+            FROM ${Tables.EMPLOYEE}
+            ${sortQuery} ${pagination}
+            `
+            console.log(query);
+            db.query(query, (err, res) => {
                 if (err) {
-                    return reject(err);
+                    console.log(err);
+                    reject(err);
                 }
-                if (res.length){
+                if (res.length) {
                     return resolve(res.map((result: any) => Object.assign({}, result)));
                 }
                 return resolve(null);
@@ -36,7 +37,52 @@ export class EmployeeDB {
         })
     }
 
-    public static insertEmployee(firstName: string, lastName: string, email: string, password: string, employeeId: Number, organization: string): Promise<string> {
+    public static getEmployeeByEmployeeDetails(firstName?: string, lastName?: string, employeeId?: number): Promise<Employee> {
+        return new Promise((resolve, reject) => {
+            db.query(`SELECT ${Tables.EMPLOYEE}.id, ${Tables.EMPLOYEE}.firstName, ${Tables.EMPLOYEE}.lastName, ${Tables.EMPLOYEE}.email, ${Tables.EMPLOYEE}.employeeId, ${Tables.EMPLOYEE}.organization, ${Tables.EMPLOYEE}.createdOn
+                      FROM ${Tables.EMPLOYEE} WHERE ${Tables.EMPLOYEE}.firstName='${firstName}' OR ${Tables.EMPLOYEE}.lastName='${lastName}' OR ${Tables.EMPLOYEE}.employeeId='${employeeId}'
+                      `, (err, res) => {
+                if (err) {
+                    reject(err);
+                }
+                if (res.length) {
+                    return resolve(res.map((result: any) => Object.assign({}, result)));
+                }
+                return resolve(null);
+            })
+        })
+    }
+
+    public static getEmployeeByEmailId(email: string): Promise<Employee> {
+        return new Promise((resolve, reject) => {
+            db.query(`SELECT ${Tables.EMPLOYEE}.email FROM ${Tables.EMPLOYEE} WHERE ${Tables.EMPLOYEE}.email='${email}'`, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (res.length) {
+                    return resolve(Object.assign({}, res[0]));
+                }
+                return resolve(null);
+            })
+        })
+    }
+
+    public static getEmployeeByEmployeeId(employeeId: number): Promise<Employee> {
+        return new Promise((resolve, reject) => {
+            db.query(`SELECT ${Tables.EMPLOYEE}.id, ${Tables.EMPLOYEE}.firstName, ${Tables.EMPLOYEE}.lastName, ${Tables.EMPLOYEE}.email, ${Tables.EMPLOYEE}.employeeId, ${Tables.EMPLOYEE}.organization, ${Tables.EMPLOYEE}.createdOn
+                      FROM ${Tables.EMPLOYEE} WHERE ${Tables.EMPLOYEE}.employeeId='${employeeId}'`, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (res.length) {
+                    return resolve(Object.assign({}, res[0]));
+                }
+                return resolve(null);
+            })
+        })
+    }
+
+    public static insertEmployee(firstName: string, lastName: string, email: string, password: string, employeeId: string, organization: string): Promise<string> {
         return new Promise((resolve, reject) => {
             db.query(`INSERT INTO ${Tables.EMPLOYEE} (firstName, lastName, email, password, employeeId ,organization) VALUES ('${firstName}', '${lastName}', '${email}', '${password}', '${employeeId}','${organization}')`, (err, res) => {
                 if (err) {
