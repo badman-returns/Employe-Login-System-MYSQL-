@@ -1,63 +1,51 @@
 # Employe Login System 
+This application consists of Login Systems for Employees and Admins. Employees can only register with their creditials and login to view their creditials. Admins can view all employee list and can sort with parameters and paginate.
 
-### Required Toools
-* VScode - Code Editor
+## Required Tools And Technology Stack
+* Node.js - Javascript Runtime for Servers.
 * MYSQL Workbench - Database Management Tool
 * Git Bash - GitCLI for Git Operations
 * POSTMAN - API Testing Tool
+* TypeScript -an open-source language which builds on JavaScript, one of the world’s most used tools, by adding static type definitions.
 
+## Prerequisites
+* Requires MYSQL service to run and create database.
+* Start the MYSQL database service before starting backend.
+* Create a Database for this application
 
-### Technology Stack
-This web application is going to be built on top of microservice architechture.
-##### Frontend
-* [ReactJS] - A JavaScript library for building user interfaces
-* [Material UI] - React components for faster and easier web development. Build your own design system, or start with Material Design
-* [CKEditor] - Smart WYSIWYG editor components with collaborative editing
-##### Backend
-* [Nodejs] - Free, open-sourced, cross-platform JavaScript run-time environment
-* [TypeScript] - TypeScript extends JavaScript by adding types. TypeScript saves you time catching errors and providing fixes before you     
- run code.
-* [JSON Web Token] - JWT for Authentication & Authorization
-
-##### Database
-* [MYSQL Workbench] - MySQL Workbench provides data modeling, SQL development, and comprehensive administration tools for server configuration, user administration, backup, and much more.
-
-### Prerequisites
-* Node version 12.18.1 or above must be installed.
-* MYSQL Service along with MYSQL Workbench must be installed.
-
-### Development
-Requires [MYSQL] service to run and create database.
-Start the MYSQL database service before starting backend.
-
-
-
-#### To run the backend server
+##### Environmental Variables
+####
 ```
-$ cd backend
+DB_HOST - Set your Database Host e.g - localhost or 127.0.0.1 for Local
+DB_USER =  Database User
+DB_PASSWORD = Databse Password
+DB_NAME = Database Name
+ADMIN_DEFAULT_PASSWORD = Set Default Password for Admin
+PORT = Set Default Port
+```
+
+##### To run the application
+####
+```
+$ cd Antartica Global
 $ npm i
-$ npm start
+$ npm run local - Local Development Environment
+$ npm start -  Production  Environment
 ```
-#### To run the frontend server
-##### Backend API and URL Configurations
-* All the configuration files for URL (production and dev) are stored inside frotend/src/configs folder.
-* Use config.js file inside the configs folder to configure baseURL and baseAPIURL
-* By default baseURL is set to http://localhost:8080 until  process.env.NODE_ENV === 'development'
 
+## Folder Structure and Organization
+
+```               
+---src
+    +---configs
+    +---database
+    +---interfaces
+    +---middleware
+    +---model
+    +---routes
+    +---utility
+     |   app.ts
+     |   server.ts
 ```
-$ cd frontend
-$ npm i
-$ npm start
-```
-Development is still on progress.
-
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen.)
-
-[ReactJS]:https://reactjs.org/
-[Material UI]:https://material-ui.com/
-[CKEditor]: https://ckeditor.com/
-[Nodejs]: https://nodejs.dev/
-[TypeScript]: https://www.typescriptlang.org/
-[JSON Web Token]: https://jwt.io/
-[MYSQL]: https://www.mysql.com/
-[MYSQL Workbench]: https://www.mysql.com/downloads/
+The entry point of this application is ==server.ts==. This file creates an instance of the app and start to listen on given specific port. In the ==app.ts== routing, intializing middleware, initializing database tables is done.
+Inside the ==src==  folder we have ==configs== folder which contains file that stores configuration variables. The ==database== folder contains a file where the database tables are created and master data is inserted. Next the ==interface== folder contains custom generated types which is used across the application. The middlware folder contains middlewares which is used for accessing protected routes and also login. Inside the ==model== folder all the database model files are present that contains queries for respected database operations. The ==routes== folder has been divided into admin and public and each of them has their routing and controllers in it and the ==utility== folder contains utilities.
