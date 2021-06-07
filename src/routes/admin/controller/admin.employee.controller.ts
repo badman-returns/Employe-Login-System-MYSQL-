@@ -8,9 +8,16 @@ class AdminController {
     }
 
     public static adminEmployeeSearch = async (req: AuthenticatedRequest, res: Response) => {
-        const firstname = req.query.firstname || '';
-        const lastname = req.query.lastname || '';
+        const firstname = req.query.firstName || '';
+        const lastname = req.query.lastName || '';
         const employeeId = req.query.employeeId;
+       
+        if (req.user.role !== 'SUPER_ADMIN') {
+            return res.status(401).send({
+                msg: `You are not authorized admin`,
+                Data: null,
+            });
+        }
 
         let response: ResponseObject<Employee>;
 
@@ -22,7 +29,6 @@ class AdminController {
                     ResponseMessage: 'Employee Details fetched',
                 }
             } catch (error) {
-                console.log(error);
                 return res.status(500).end()
             }
             return res.send(response);
@@ -36,14 +42,20 @@ class AdminController {
         const sortBy = req.query.sortBy || '';
         const pageNumber = req.query.pageNumber;
         const limit = Number(req.query.limit) || 10;
-
+       
+        if (req.user.role !== 'SUPER_ADMIN') {
+            return res.status(401).send({
+                msg: `You are not authorized admin`,
+                Data: null,
+            });
+        }
+        
         let sortParams = ['firstName', 'lastName', 'email', 'employeeId', 'organization'];
         let isValidSortValue = sortParams.some((current: string) => current == sortBy);
 
-        if(sortBy !== '' && !isValidSortValue){
+        if (sortBy !== '' && !isValidSortValue) {
             return res.status(400).send();
         }
-        console.log(limit);
         let offset: Number;
         if (pageNumber && limit) {
             offset = (Number(pageNumber) - 1) * (Number(limit));
@@ -56,7 +68,6 @@ class AdminController {
                 ResponseMessage: 'Employee Data fetched',
             }
         } catch (error) {
-            console.log(error);
             return res.status(500).end();
         }
         return res.send(response);
