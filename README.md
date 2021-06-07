@@ -1,6 +1,8 @@
 # Employe Login System 
 This application consists of Login Systems for Employees and Admins. Employees can only register with their creditials and login to view their creditials. Admins can view all employee list and can sort with parameters and paginate.
 
+[API Documetation]
+
 ## Required Tools And Technology Stack
 * Node.js - Javascript Runtime for Servers.
 * MYSQL Workbench - Database Management Tool
@@ -51,3 +53,5 @@ The entry point of this application is server.ts. This file creates an instance 
 Inside the src folder we have configs folder which contains file that stores configuration variables. The database folder contains a file where the database tables are created and master data is inserted. Next the interface folder contains custom generated types which is used across the application. The middlware folder contains middlewares which is used for accessing protected routes and also login. 
 Inside the model folder all the database model files are present that contains queries for respected database operations. 
 The routes folder has been divided into admin and public and each of them has their routing and controllers in it and the utility folder contains utilities.
+
+[API Documetation]: https://documenter.getpostman.com/view/11794310/TzY69EPq
