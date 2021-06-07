@@ -47,5 +47,7 @@ $ npm start -  Production  Environment
      |   app.ts
      |   server.ts
 ```
-The entry point of this application is ==server.ts==. This file creates an instance of the app and start to listen on given specific port. In the ==app.ts== routing, intializing middleware, initializing database tables is done.
-Inside the ==src==  folder we have ==configs== folder which contains file that stores configuration variables. The ==database== folder contains a file where the database tables are created and master data is inserted. Next the ==interface== folder contains custom generated types which is used across the application. The middlware folder contains middlewares which is used for accessing protected routes and also login. Inside the ==model== folder all the database model files are present that contains queries for respected database operations. The ==routes== folder has been divided into admin and public and each of them has their routing and controllers in it and the ==utility== folder contains utilities.
+The entry point of this application is server.ts. This file creates an instance of the app and start to listen on given specific port. In the app.ts routing, intializing middleware, initializing database tables is done.
+Inside the src folder we have configs folder which contains file that stores configuration variables. The database folder contains a file where the database tables are created and master data is inserted. Next the interface folder contains custom generated types which is used across the application. The middlware folder contains middlewares which is used for accessing protected routes and also login. 
+Inside the model folder all the database model files are present that contains queries for respected database operations. 
+The routes folder has been divided into admin and public and each of them has their routing and controllers in it and the utility folder contains utilities.
