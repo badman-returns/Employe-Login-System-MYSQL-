@@ -1,5 +1,5 @@
 # Employe Login System 
-This application consists of Login Systems for Employees and Admins. Employees can only register with their creditials and login to view their creditials. Admins can view all employee list and can sort with parameters and paginate.
+This application consists of Login Systems for Employees and Admins. Employees can only register with their credentials and login to view their credentials. Admins can view all employee list and can sort with parameters and paginate.
 
 [API Documetation]
 
