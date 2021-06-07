@@ -1,7 +1,6 @@
 import db from './db';
 import { Employee } from '../interfaces';
 import { Tables } from '../configs/table.config';
-import e from 'express';
 
 export class EmployeeDB {
 
@@ -20,10 +19,9 @@ export class EmployeeDB {
                 sortQuery = `ORDER BY ${Tables.EMPLOYEE}.${sortBy} ASC`
             }
             let query = `SELECT ${Tables.EMPLOYEE}.id, ${Tables.EMPLOYEE}.firstName, ${Tables.EMPLOYEE}.lastName, ${Tables.EMPLOYEE}.email, ${Tables.EMPLOYEE}.employeeId, ${Tables.EMPLOYEE}.organization, ${Tables.EMPLOYEE}.createdOn
-            FROM ${Tables.EMPLOYEE}
+                         FROM ${Tables.EMPLOYEE}
             ${sortQuery} ${pagination}
             `
-            console.log(query);
             db.query(query, (err, res) => {
                 if (err) {
                     console.log(err);
@@ -39,9 +37,9 @@ export class EmployeeDB {
 
     public static getEmployeeByEmployeeDetails(firstName?: string, lastName?: string, employeeId?: number): Promise<Employee> {
         return new Promise((resolve, reject) => {
-            db.query(`SELECT ${Tables.EMPLOYEE}.id, ${Tables.EMPLOYEE}.firstName, ${Tables.EMPLOYEE}.lastName, ${Tables.EMPLOYEE}.email, ${Tables.EMPLOYEE}.employeeId, ${Tables.EMPLOYEE}.organization, ${Tables.EMPLOYEE}.createdOn
-                      FROM ${Tables.EMPLOYEE} WHERE ${Tables.EMPLOYEE}.firstName='${firstName}' OR ${Tables.EMPLOYEE}.lastName='${lastName}' OR ${Tables.EMPLOYEE}.employeeId='${employeeId}'
-                      `, (err, res) => {
+            let query = `SELECT ${Tables.EMPLOYEE}.id, ${Tables.EMPLOYEE}.firstName, ${Tables.EMPLOYEE}.lastName, ${Tables.EMPLOYEE}.email, ${Tables.EMPLOYEE}.employeeId, ${Tables.EMPLOYEE}.organization, ${Tables.EMPLOYEE}.createdOn
+                         FROM ${Tables.EMPLOYEE} WHERE ${Tables.EMPLOYEE}.firstName='${firstName}' OR ${Tables.EMPLOYEE}.lastName='${lastName}' OR ${Tables.EMPLOYEE}.employeeId='${employeeId}'`
+            db.query(query, (err, res) => {
                 if (err) {
                     reject(err);
                 }
@@ -55,7 +53,8 @@ export class EmployeeDB {
 
     public static getEmployeeByEmailId(email: string): Promise<Employee> {
         return new Promise((resolve, reject) => {
-            db.query(`SELECT * FROM ${Tables.EMPLOYEE} WHERE ${Tables.EMPLOYEE}.email='${email}'`, (err, res) => {
+            let query = `SELECT * FROM ${Tables.EMPLOYEE} WHERE ${Tables.EMPLOYEE}.email='${email}'`
+            db.query(query, (err, res) => {
                 if (err) {
                     return reject(err);
                 }
@@ -69,8 +68,9 @@ export class EmployeeDB {
 
     public static getEmployeeByEmployeeId(employeeId: number): Promise<Employee> {
         return new Promise((resolve, reject) => {
-            db.query(`SELECT ${Tables.EMPLOYEE}.id, ${Tables.EMPLOYEE}.firstName, ${Tables.EMPLOYEE}.lastName, ${Tables.EMPLOYEE}.email, ${Tables.EMPLOYEE}.employeeId, ${Tables.EMPLOYEE}.organization, ${Tables.EMPLOYEE}.createdOn
-                      FROM ${Tables.EMPLOYEE} WHERE ${Tables.EMPLOYEE}.employeeId='${employeeId}'`, (err, res) => {
+            let query = `SELECT ${Tables.EMPLOYEE}.id, ${Tables.EMPLOYEE}.firstName, ${Tables.EMPLOYEE}.lastName, ${Tables.EMPLOYEE}.email, ${Tables.EMPLOYEE}.employeeId, ${Tables.EMPLOYEE}.organization, ${Tables.EMPLOYEE}.createdOn
+                         FROM ${Tables.EMPLOYEE} WHERE ${Tables.EMPLOYEE}.employeeId='${employeeId}'`
+            db.query(query, (err, res) => {
                 if (err) {
                     return reject(err);
                 }
@@ -84,7 +84,8 @@ export class EmployeeDB {
 
     public static insertEmployee(firstName: string, lastName: string, email: string, password: string, employeeId: string, organization: string): Promise<string> {
         return new Promise((resolve, reject) => {
-            db.query(`INSERT INTO ${Tables.EMPLOYEE} (firstName, lastName, email, password, employeeId ,organization) VALUES ('${firstName}', '${lastName}', '${email}', '${password}', '${employeeId}','${organization}')`, (err, res) => {
+            let query = `INSERT INTO ${Tables.EMPLOYEE} (firstName, lastName, email, password, employeeId ,organization) VALUES ('${firstName}', '${lastName}', '${email}', '${password}', '${employeeId}','${organization}')`
+            db.query(query, (err, res) => {
                 if (err) {
                     return reject(err);
                 }

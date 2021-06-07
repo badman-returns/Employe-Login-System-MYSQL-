@@ -19,7 +19,7 @@ class AdminRouting {
         // Employee Search Routes
         this.router.get('/search', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], AdminEmployeeSearch);
 
-        // Employee Search Route by sorting
+        // Employee Search Route by sorting and pagination
         this.router.get('/employee', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], AdminSortEmployeeByDetails)
     }
 }
