@@ -55,7 +55,7 @@ export class EmployeeDB {
 
     public static getEmployeeByEmailId(email: string): Promise<Employee> {
         return new Promise((resolve, reject) => {
-            db.query(`SELECT ${Tables.EMPLOYEE}.email FROM ${Tables.EMPLOYEE} WHERE ${Tables.EMPLOYEE}.email='${email}'`, (err, res) => {
+            db.query(`SELECT * FROM ${Tables.EMPLOYEE} WHERE ${Tables.EMPLOYEE}.email='${email}'`, (err, res) => {
                 if (err) {
                     return reject(err);
                 }

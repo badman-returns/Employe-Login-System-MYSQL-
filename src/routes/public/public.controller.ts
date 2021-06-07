@@ -28,6 +28,7 @@ class PublicController {
                     Message: `You don't have any account with us`,
                     Data: null,
                 });
+
             } else if (user && !Encryption.decryptPassword(password, user.password)) {
                 res.status(401).send({
                     Message: `Incorrect password`,
